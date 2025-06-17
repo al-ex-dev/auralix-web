@@ -189,9 +189,13 @@ function ListaConferencias() {
                     div[style*="max-width: 600px"] {
                         padding: 1rem .5rem 1rem .5rem !important;
                         border-radius: .7rem !important;
+                        max-width: 98vw !important;
                     }
                     h2 {
                         font-size: 1.05rem !important;
+                    }
+                    li {
+                        font-size: .97rem !important;
                     }
                 }
                 @keyframes fadeincard {

@@ -86,7 +86,8 @@ function Profile() {
                 padding: "2rem 1.3rem 1.5rem 1.3rem",
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "center"
+                alignItems: "center",
+                animation: "fadeincard 0.8s cubic-bezier(.4,0,.2,1)"
             }}>
                 {person.photo && (
                     <img
@@ -213,6 +214,27 @@ function Profile() {
                     Volver
                 </button>
             </div>
+            <style>
+                {`
+                @media (max-width: 600px) {
+                    div[style*="max-width: 420px"] {
+                        padding: 1rem .5rem 1rem .5rem !important;
+                        border-radius: .7rem !important;
+                        max-width: 98vw !important;
+                    }
+                    h2 {
+                        font-size: 1.05rem !important;
+                    }
+                    div, span, button {
+                        font-size: .97rem !important;
+                    }
+                }
+                @keyframes fadeincard {
+                    from { opacity: 0; transform: translateY(30px);}
+                    to { opacity: 1; transform: translateY(0);}
+                }
+                `}
+            </style>
         </div>
     );
 }

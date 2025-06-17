@@ -80,9 +80,13 @@ function Sobre() {
                     div[style*="max-width: 340px"] {
                         padding: 1rem .5rem 1rem .5rem !important;
                         border-radius: .7rem !important;
+                        max-width: 98vw !important;
                     }
                     h2 {
                         font-size: 1.05rem !important;
+                    }
+                    p, li {
+                        font-size: .97rem !important;
                     }
                 }
                 @keyframes fadeincard {

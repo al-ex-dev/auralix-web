@@ -206,12 +206,16 @@ function ConferenceDetail() {
                     main {
                         padding: 0 !important;
                     }
-                    div[style*="max-width: 420px"] {
+                    div[style*="max-width: 420px"], section[style*="max-width: 420px"] {
                         padding: 1rem .5rem 1rem .5rem !important;
                         border-radius: .7rem !important;
+                        max-width: 98vw !important;
                     }
                     h1 {
                         font-size: 1.05rem !important;
+                    }
+                    div, span, button, strong {
+                        font-size: .97rem !important;
                     }
                 }
                 @keyframes fadeincard {
