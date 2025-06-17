@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { CYCLES, CONFERENCES } from "../utils/conferencias";
+import theme from "../theme";
 
 function findPersonBySlug(slug) {
     // Buscar en moderadores y ponentes de ciclos
@@ -34,35 +35,86 @@ function Profile() {
     const { slug } = useParams();
     const navigate = useNavigate();
     const person = findPersonBySlug(slug);
+    const colors = theme.colors;
+
+    // Botón reutilizable para volver
+    const BotonAccion = ({ children, onClick, color, ...props }) => {
+        const baseStyle = {
+            padding: ".5rem 1.1rem",
+            borderRadius: "2rem",
+            border: "none",
+            background: "rgba(99,102,241,0.12)",
+            color: color || colors.button,
+            fontWeight: 700,
+            fontSize: ".97rem",
+            cursor: "pointer",
+            boxShadow: "0 2px 8px 0 rgba(99,102,241,0.10)",
+            letterSpacing: ".01em",
+            transition: "background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.15s",
+            textDecoration: "none",
+            display: "inline-block",
+            outline: "none"
+        };
+
+        const handleMouseOver = e => {
+            e.currentTarget.style.background = color || colors.button;
+            e.currentTarget.style.color = colors.buttonText;
+            e.currentTarget.style.transform = "translateY(-2px) scale(1.04)";
+            e.currentTarget.style.boxShadow = `0 6px 24px 0 ${colors.badgeBg}33,
+                0 0 12px 2px ${colors.h2}88,
+                0 0 24px 4px ${colors.accent}55`;
+            e.currentTarget.style.zIndex = 1;
+        };
+        const handleMouseOut = e => {
+            e.currentTarget.style.background = "rgba(99,102,241,0.12)";
+            e.currentTarget.style.color = color || colors.button;
+            e.currentTarget.style.transform = "none";
+            e.currentTarget.style.boxShadow = "0 2px 8px 0 rgba(99,102,241,0.10)";
+            e.currentTarget.style.zIndex = 0;
+        };
+        const handleMouseDown = e => {
+            e.currentTarget.style.transform = "scale(0.97)";
+            e.currentTarget.style.boxShadow = "0 1px 4px 0 " + colors.badgeBg + "22";
+        };
+        const handleMouseUp = e => {
+            e.currentTarget.style.transform = "scale(1)";
+            e.currentTarget.style.boxShadow = "0 2px 8px 0 rgba(99,102,241,0.10)";
+        };
+
+        return (
+            <button
+                className="cta-btn"
+                style={baseStyle}
+                onClick={onClick}
+                onMouseOver={handleMouseOver}
+                onMouseOut={handleMouseOut}
+                onMouseDown={handleMouseDown}
+                onMouseUp={handleMouseUp}
+                {...props}
+            >
+                {children}
+            </button>
+        );
+    };
 
     if (!person) {
         return (
             <div style={{
                 minHeight: "100vh",
-                background: "#18181b",
-                color: "#f3f4f6",
+                background: colors.bg,
+                color: colors.text,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center"
             }}>
                 <div>
-                    <h2 style={{ color: "#a5b4fc" }}>Perfil no encontrado</h2>
-                    <button
-                        style={{
-                            marginTop: "1.5rem",
-                            padding: ".5rem 1.1rem",
-                            borderRadius: "2rem",
-                            border: "none",
-                            background: "rgba(99,102,241,0.12)",
-                            color: "#4f46e5",
-                            fontWeight: 700,
-                            fontSize: ".97rem",
-                            cursor: "pointer"
-                        }}
+                    <h2 style={{ color: colors.h2 }}>Perfil no encontrado</h2>
+                    <BotonAccion
+                        style={{ marginTop: "1.5rem" }}
                         onClick={() => navigate(-1)}
                     >
                         Volver
-                    </button>
+                    </BotonAccion>
                 </div>
             </div>
         );
@@ -71,14 +123,14 @@ function Profile() {
     return (
         <div style={{
             minHeight: "100vh",
-            background: "#18181b",
-            color: "#f3f4f6",
+            background: colors.bg,
+            color: colors.text,
             display: "flex",
             alignItems: "center",
             justifyContent: "center"
         }}>
             <div style={{
-                background: "#232336",
+                background: colors.card,
                 borderRadius: "1.1rem",
                 boxShadow: "0 4px 16px 0 rgba(31, 38, 135, 0.18)",
                 maxWidth: 420,
@@ -103,7 +155,7 @@ function Profile() {
                         }}
                     />
                 )}
-                <h2 style={{ color: "#a5b4fc", fontWeight: 700, fontSize: "1.2rem", marginBottom: ".3rem" }}>
+                <h2 style={{ color: colors.h2, fontWeight: 700, fontSize: "1.2rem", marginBottom: ".3rem" }}>
                     {person.name}
                 </h2>
                 {person.role && (
@@ -128,7 +180,7 @@ function Profile() {
                         {person.certifications.map((cert, idx) => (
                             <span key={idx} style={{
                                 background: "#312e81",
-                                color: "#a5b4fc",
+                                color: colors.h2,
                                 borderRadius: "1rem",
                                 padding: ".18rem .7rem",
                                 fontSize: ".88rem",
@@ -197,22 +249,12 @@ function Profile() {
                         ))}
                     </div>
                 )}
-                <button
-                    style={{
-                        marginTop: "1.5rem",
-                        padding: ".5rem 1.1rem",
-                        borderRadius: "2rem",
-                        border: "none",
-                        background: "rgba(99,102,241,0.12)",
-                        color: "#4f46e5",
-                        fontWeight: 700,
-                        fontSize: ".97rem",
-                        cursor: "pointer"
-                    }}
+                <BotonAccion
+                    style={{ marginTop: "1.5rem" }}
                     onClick={() => navigate(-1)}
                 >
                     Volver
-                </button>
+                </BotonAccion>
             </div>
             <style>
                 {`

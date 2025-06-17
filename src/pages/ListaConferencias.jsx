@@ -1,24 +1,98 @@
-import { useNavigate } from "react-router-dom";
 import { CONFERENCES } from "../utils/conferencias";
+import { useNavigate } from "react-router-dom";
+import theme from "../theme";
 
 function ListaConferencias() {
     const navigate = useNavigate();
-    const colors = {
-        h2: "#a5b4fc",
-        card: "#232336",
-        text: "#f3f4f6",
-        button: "#4f46e5"
+    const colors = theme.colors;
+
+    // Botón reutilizable para acciones principales y detalles
+    const BotonAccion = ({ children, onClick, as = "button", href, color, ...props }) => {
+        const baseStyle = {
+            padding: ".5rem 1.1rem",
+            borderRadius: "2rem",
+            border: "none",
+            background: "rgba(99,102,241,0.12)",
+            color: color || colors.button,
+            fontWeight: 700,
+            fontSize: ".97rem",
+            cursor: "pointer",
+            boxShadow: "0 2px 8px 0 rgba(99,102,241,0.10)",
+            letterSpacing: ".01em",
+            transition: "background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.15s",
+            textDecoration: "none",
+            display: "inline-block",
+            outline: "none"
+        };
+
+        const handleMouseOver = e => {
+            e.currentTarget.style.background = color || colors.button;
+            e.currentTarget.style.color = colors.buttonText;
+            e.currentTarget.style.transform = "translateY(-2px) scale(1.04)";
+            e.currentTarget.style.boxShadow = `0 6px 24px 0 ${colors.badgeBg}33,
+                0 0 12px 2px ${colors.h2}88,
+                0 0 24px 4px ${colors.accent}55`;
+            e.currentTarget.style.zIndex = 1;
+        };
+        const handleMouseOut = e => {
+            e.currentTarget.style.background = "rgba(99,102,241,0.12)";
+            e.currentTarget.style.color = color || colors.button;
+            e.currentTarget.style.transform = "none";
+            e.currentTarget.style.boxShadow = "0 2px 8px 0 rgba(99,102,241,0.10)";
+            e.currentTarget.style.zIndex = 0;
+        };
+        const handleMouseDown = e => {
+            e.currentTarget.style.transform = "scale(0.97)";
+            e.currentTarget.style.boxShadow = "0 1px 4px 0 " + colors.badgeBg + "22";
+        };
+        const handleMouseUp = e => {
+            e.currentTarget.style.transform = "scale(1)";
+            e.currentTarget.style.boxShadow = "0 2px 8px 0 rgba(99,102,241,0.10)";
+        };
+
+        if (as === "a") {
+            return (
+                <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={baseStyle}
+                    onMouseOver={handleMouseOver}
+                    onMouseOut={handleMouseOut}
+                    onMouseDown={handleMouseDown}
+                    onMouseUp={handleMouseUp}
+                    {...props}
+                >
+                    {children}
+                </a>
+            );
+        }
+        return (
+            <button
+                className="cta-btn"
+                style={baseStyle}
+                onClick={onClick}
+                onMouseOver={handleMouseOver}
+                onMouseOut={handleMouseOut}
+                onMouseDown={handleMouseDown}
+                onMouseUp={handleMouseUp}
+                {...props}
+            >
+                {children}
+            </button>
+        );
     };
 
     return (
         <div
             style={{
                 minHeight: "100vh",
-                background: "#18181b",
-                // Cambia overflowY de "hidden" a "auto" para permitir scroll y evitar el tambaleo si hay mucho contenido
+                background: colors.bg,
                 overflowY: "auto",
                 overflowX: "hidden",
-                zIndex: 0
+                zIndex: 0,
+                width: "100%",
+                boxSizing: "border-box"
             }}
         >
             <main
@@ -32,10 +106,12 @@ function ListaConferencias() {
                     padding: 0,
                     margin: 0,
                     width: "100%",
-                    paddingTop: "2.5rem"
+                    paddingTop: "2.5rem",
+                    boxSizing: "border-box"
                 }}
             >
                 <div
+                    className="auralix-card"
                     style={{
                         background: colors.card,
                         borderRadius: "1.1rem",
@@ -58,7 +134,7 @@ function ListaConferencias() {
                         fontWeight: 700,
                         animation: "fadeInText 0.8s ease-in-out"
                     }}>
-                        Conferencias individuales
+                        Conferencias inendividuales
                     </h2>
                     <ul style={{ width: "100%", listStyle: "none", padding: 0, margin: 0 }}>
                         {CONFERENCES.length === 0 && (
@@ -72,8 +148,8 @@ function ListaConferencias() {
                             </li>
                         )}
                         {CONFERENCES.map((conf) => (
-                            <li key={conf.id} style={{
-                                background: "#232336",
+                            <li key={conf.id} className="auralix-card-item" style={{
+                                background: colors.card,
                                 borderRadius: ".7rem",
                                 marginBottom: ".9rem",
                                 padding: "1.1rem 1rem",
@@ -95,7 +171,6 @@ function ListaConferencias() {
                                         }}
                                     />
                                 )}
-                                {/* Título con tamaño idéntico al de ciclo */}
                                 <div style={{ fontWeight: 700, color: colors.h2, fontSize: "1.07rem" }}>{conf.name}</div>
                                 <div style={{ color: "#c7d2fe", fontSize: ".97rem" }}>{conf.description}</div>
                                 <div style={{ color: "#c7d2fe", fontSize: ".97rem" }}>
@@ -105,8 +180,8 @@ function ListaConferencias() {
                                     <span style={{
                                         padding: ".2rem .8rem",
                                         borderRadius: "1rem",
-                                        background: conf.status ? "#166534" : "#27272a",
-                                        color: conf.status ? "#bbf7d0" : "#a1a1aa",
+                                        background: conf.status ? colors.badgeBg || "#166534" : "#27272a",
+                                        color: conf.status ? colors.badgeColor || "#bbf7d0" : "#a1a1aa",
                                         fontWeight: 500,
                                         fontSize: ".95rem",
                                         whiteSpace: "nowrap"
@@ -114,7 +189,6 @@ function ListaConferencias() {
                                         {conf.status ? "En proceso" : "Finalizado"}
                                     </span>
                                 </div>
-                                {/* Ponente */}
                                 {conf.speaker && (
                                     <div style={{ color: "#c7d2fe", fontSize: ".97rem", display: "flex", alignItems: "center", gap: ".5rem" }}>
                                         {conf.speaker.photo && (
@@ -122,7 +196,7 @@ function ListaConferencias() {
                                         )}
                                         <span
                                             style={{
-                                                color: "#a5b4fc",
+                                                color: colors.h2,
                                                 fontWeight: 700,
                                                 fontSize: "1.01rem",
                                                 cursor: "pointer",
@@ -136,25 +210,11 @@ function ListaConferencias() {
                                         </span>
                                     </div>
                                 )}
-                                <button
-                                    style={{
-                                        marginTop: ".5rem",
-                                        padding: ".5rem 1.1rem",
-                                        borderRadius: "2rem",
-                                        border: "none",
-                                        background: "rgba(99,102,241,0.12)",
-                                        color: colors.button,
-                                        fontWeight: 700,
-                                        fontSize: ".97rem",
-                                        cursor: "pointer",
-                                        boxShadow: "0 2px 8px 0 rgba(99,102,241,0.10)",
-                                        letterSpacing: ".01em",
-                                        transition: "background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.15s"
-                                    }}
+                                <BotonAccion
                                     onClick={() => navigate(`/conferencias/${conf.id}`)}
                                 >
                                     Ver detalles de la conferencia
-                                </button>
+                                </BotonAccion>
                             </li>
                         ))}
                     </ul>
@@ -171,7 +231,7 @@ function ListaConferencias() {
                         marginTop: "1.5rem"
                     }}
                 >
-                    © {new Date().getFullYear()} Ciclo de Conferencias · Facultad de Tecnología y Sociedad
+                    © {new Date().getFullYear()} Ciclo de Conferencias · Facultad de Ingenieria
                 </footer>
             </main>
             <style>

@@ -7,7 +7,7 @@ import Sobre from "./pages/Sobre";
 import ListaCiclos from "./pages/ListaCiclos";
 import CicloConferencia from "./pages/CicloConferencia";
 import Profile from "./pages/Profile";
-import Header from "./components/Header";
+import Inscripcion from "./pages/Inscripcion";
 
 function App() {
     return (
@@ -21,10 +21,11 @@ function App() {
                 <Route path="/conferencias/:id" element={<DetalleConferencia />} />
                 <Route path="/profile/:slug" element={<Profile />} />
                 <Route path="/sobre" element={<Sobre />} />
+                <Route path="/inscripcion" element={<Inscripcion />} />
                 <Route path="*" element={<Navigate to="/inicio" />} />
             </Routes>
         </Router>
     );
 }
 
-export default App;
+export default App

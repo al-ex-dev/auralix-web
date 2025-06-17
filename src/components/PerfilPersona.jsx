@@ -1,7 +1,9 @@
 import React from "react";
+import theme from "../theme"; // Añadido
 
 function PersonProfile({ person, role }) {
     if (!person) return null;
+    const colors = theme.colors; // Añadido
     return (
         <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: ".7rem" }}>
             {person.photo && (
@@ -18,7 +20,7 @@ function PersonProfile({ person, role }) {
                 />
             )}
             <div>
-                <div style={{ fontWeight: 700, color: "#a5b4fc", fontSize: "1.07rem", animation: "fadeInText 0.8s ease-in-out" }}>
+                <div style={{ fontWeight: 700, color: colors.h2, fontSize: "1.07rem", animation: "fadeInText 0.8s ease-in-out" }}>
                     {person.name} {role && <span style={{ color: "#818cf8", fontWeight: 500, fontSize: ".97rem" }}>({role})</span>}
                 </div>
                 {person.title && (
@@ -29,15 +31,15 @@ function PersonProfile({ person, role }) {
                 )}
                 {person.universityDegree && (
                     <div style={{ color: "#c7d2fe", fontSize: ".95rem", marginTop: ".2rem" }}>
-                        <b>University degree:</b> {person.universityDegree}
+                        <b>Grado universitario:</b> {person.universityDegree}
                     </div>
                 )}
-                {Array.isArray(person.certifications) && person.certifications.length > 0`` && (
+                {Array.isArray(person.certifications) && person.certifications.length > 0 && (
                     <div style={{ marginTop: ".3rem", display: "flex", flexWrap: "wrap", gap: ".4rem" }}>
                         {person.certifications.map((cert, idx) => (
                             <span key={idx} style={{
                                 background: "#312e81",
-                                color: "#a5b4fc",
+                                color: colors.h2,
                                 borderRadius: "1rem",
                                 padding: ".18rem .7rem",
                                 fontSize: ".88rem",

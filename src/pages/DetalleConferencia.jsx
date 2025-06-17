@@ -1,19 +1,88 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { CONFERENCES } from "../utils/conferencias";
+import theme from "../theme";
 
 function ConferenceDetail() {
     const { id } = useParams();
     const navigate = useNavigate();
     const conf = CONFERENCES.find(c => c.id === Number(id));
-    const colors = {
-        h2: "#a5b4fc",
-        card: "#232336",
-        text: "#f3f4f6",
-        accent: "#6366f1",
-        button: "#4f46e5",
-        badgeBg: conf?.status ? "#166534" : "#27272a",
-        badgeColor: conf?.status ? "#bbf7d0" : "#a1a1aa",
-        bg: "#18181b"
+    const colors = theme.colors;
+
+    // Botón reutilizable para acciones principales y detalles
+    const BotonAccion = ({ children, onClick, as = "button", href, color, ...props }) => {
+        const baseStyle = {
+            padding: ".5rem 1.1rem",
+            borderRadius: "2rem",
+            border: "none",
+            background: "rgba(99,102,241,0.12)",
+            color: color || colors.button,
+            fontWeight: 700,
+            fontSize: ".97rem",
+            cursor: "pointer",
+            boxShadow: "0 2px 8px 0 rgba(99,102,241,0.10)",
+            letterSpacing: ".01em",
+            transition: "background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.15s",
+            textDecoration: "none",
+            display: "inline-block",
+            outline: "none"
+        };
+
+        const handleMouseOver = e => {
+            e.currentTarget.style.background = color || colors.button;
+            e.currentTarget.style.color = colors.buttonText;
+            e.currentTarget.style.transform = "translateY(-2px) scale(1.04)";
+            e.currentTarget.style.boxShadow = `0 6px 24px 0 ${colors.badgeBg}33,
+                0 0 12px 2px ${colors.h2}88,
+                0 0 24px 4px ${colors.accent}55`;
+            e.currentTarget.style.zIndex = 1;
+        };
+        const handleMouseOut = e => {
+            e.currentTarget.style.background = "rgba(99,102,241,0.12)";
+            e.currentTarget.style.color = color || colors.button;
+            e.currentTarget.style.transform = "none";
+            e.currentTarget.style.boxShadow = "0 2px 8px 0 rgba(99,102,241,0.10)";
+            e.currentTarget.style.zIndex = 0;
+        };
+        const handleMouseDown = e => {
+            e.currentTarget.style.transform = "scale(0.97)";
+            e.currentTarget.style.boxShadow = "0 1px 4px 0 " + colors.badgeBg + "22";
+        };
+        const handleMouseUp = e => {
+            e.currentTarget.style.transform = "scale(1)";
+            e.currentTarget.style.boxShadow = "0 2px 8px 0 rgba(99,102,241,0.10)";
+        };
+
+        if (as === "a") {
+            return (
+                <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={baseStyle}
+                    onMouseOver={handleMouseOver}
+                    onMouseOut={handleMouseOut}
+                    onMouseDown={handleMouseDown}
+                    onMouseUp={handleMouseUp}
+                    {...props}
+                >
+                    {children}
+                </a>
+            );
+        }
+        return (
+            <button
+                className="cta-btn"
+                style={baseStyle}
+                onClick={onClick}
+                onMouseOver={handleMouseOver}
+                onMouseOut={handleMouseOut}
+                onMouseDown={handleMouseDown}
+                onMouseUp={handleMouseUp}
+                {...props}
+            >
+                {children}
+            </button>
+        );
     };
 
     if (!conf) {
@@ -87,25 +156,9 @@ function ConferenceDetail() {
                     }}
                 >
                     <header style={{ width: "100%", marginBottom: "1.2rem", display: "flex", alignItems: "center" }}>
-                        <button
-                            style={{
-                                padding: ".5rem 1.1rem",
-                                borderRadius: "2rem",
-                                border: "none",
-                                background: "rgba(99,102,241,0.12)",
-                                color: colors.button,
-                                fontWeight: 700,
-                                fontSize: ".97rem",
-                                cursor: "pointer",
-                                boxShadow: "0 2px 8px 0 rgba(99,102,241,0.10)",
-                                letterSpacing: ".01em",
-                                transition: "background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.15s",
-                                animation: "fadeInButton 0.8s ease-in-out"
-                            }}
-                            onClick={() => navigate("/conferencias")}
-                        >
+                        <BotonAccion onClick={() => navigate("/conferencias")}>
                             ← Volver a conferencias
-                        </button>
+                        </BotonAccion>
                     </header>
                     <h1 style={{ color: colors.h2, fontSize: "1.25rem", marginBottom: ".6rem", textAlign: "center", fontWeight: 700 }}>
                         {conf.name}
@@ -166,7 +219,7 @@ function ConferenceDetail() {
                             </div>
                         </div>
                         {/* Resources */}
-                        {conf.resources.length > 0 && (
+                        {Array.isArray(conf.resources) && conf.resources.length > 0 && (
                             <div style={{ marginTop: ".7rem" }}>
                                 <strong style={{ color: "#a5b4fc" }}>Recursos:</strong>
                                 <ul style={{ margin: ".5rem 0 0 0", padding: 0, listStyle: "disc inside", color: "#c7d2fe", fontSize: ".98rem" }}>
@@ -177,6 +230,42 @@ function ConferenceDetail() {
                             </div>
                         )}
                     </section>
+                    <div
+                        className="mobile-btns fade-in-text"
+                        style={{
+                            display: "flex",
+                            gap: "1.1rem",
+                            marginTop: "1.3rem",
+                            justifyContent: "center",
+                            flexWrap: "wrap",
+                            opacity: 0,
+                            transform: "translateY(10px)"
+                        }}
+                    >
+                        <BotonAccion
+                            color={colors.button}
+                            onClick={() => {/* acción inscripción */}}
+                        >
+                            Inscríbete
+                        </BotonAccion>
+                        <BotonAccion
+                            color={colors.accent}
+                            onClick={() => {/* acción ver programa */}}
+                        >
+                            Ver programa
+                        </BotonAccion>
+                        <BotonAccion
+                            color="#232336"
+                            style={{
+                                background: "#fff",
+                                color: colors.button,
+                                border: "1.5px solid #6366f1"
+                            }}
+                            onClick={() => {/* acción descargar PDF */}}
+                        >
+                            Descargar PDF
+                        </BotonAccion>
+                    </div>
                 </section>
                 <footer
                     style={{
@@ -191,7 +280,7 @@ function ConferenceDetail() {
                         bottom: 0
                     }}
                 >
-                    © {new Date().getFullYear()} Ciclo de Conferencias · Facultad de Tecnología y Sociedad
+                    © {new Date().getFullYear()} Ciclo de Conferencias · Facultad de Ingenieria
                 </footer>
             </main>
             <style>
