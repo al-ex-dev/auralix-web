@@ -4,11 +4,11 @@ export const CYCLES = [
         title: "La Ciberseguridad en la Era Digital",
         description: "La ciberseguridad no es solo una tecnología, sino una mentalidad esencial en la transformación digital. Este ciclo de conferencias busca formar ciudadanos responsables y preparados para enfrentar los desafíos del ciberespacio.",
         dates: "12 de junio del 2025",
-        image: "https://images.unsplash.com/photo-1510511459019-5dda7724fd87?auto=format&fit=crop&w=600&q=80",
+        image: "https://images.unsplash.com/photo-1510511459019-5dda7724fd87?auto=format&fit=crop&w=600&q=80S", // Cambia a require para importar localmente
         moderator: {
             name: "Ericka Vanessa Tapullima Julca",
             role: "Moderadora",
-            photo: "https://randomuser.me/api/portraits/women/65.jpg",
+            photo: "/1.png",
             certifications: ["ISO 27001", "Maestría en Gestión TI"],
             diplomas: ["Diploma en Seguridad Informática"],
             courses: ["Liderazgo en Tecnología"],
@@ -19,7 +19,7 @@ export const CYCLES = [
                 name: "Nayeli Quispe Tica",
                 title: "Especialista en Ciberseguridad",
                 bio: "Graduada en 2012 en Ingeniería de Sistemas y Computación por la UNMSM. Con experiencia en seguridad de la información y buenas prácticas digitales.",
-                photo: "https://randomuser.me/api/portraits/women/44.jpg",
+                photo: "/2.png",
                 certifications: ["CEH", "ISO 27001"],
                 masters: ["Maestría en Ciberseguridad"],
                 courses: ["Curso Avanzado de Hacking Ético"],
@@ -29,7 +29,7 @@ export const CYCLES = [
                 name: "Roy Taipe Quispe Franco",
                 title: "Licenciado en Sistemas y Software",
                 bio: "Graduado en 2015 en Ingeniería de Sistemas y Computación por la UCV, con posgrado en gestión de proyectos y experiencia en desarrollo de software seguro.",
-                photo: "https://randomuser.me/api/portraits/men/32.jpg",
+                photo: "/3.png",
                 certifications: ["Scrum Master"],
                 postgraduates: ["Posgrado en Gestión de Proyectos"],
                 universityDegree: "Licenciado en Sistemas"
@@ -38,7 +38,7 @@ export const CYCLES = [
                 name: "Alessandro Villogas Gaspar",
                 title: "Ingeniero de Sistemas y Computación",
                 bio: "Graduado en 2015 por la UNCP. Especialista en ciberseguridad, protección de datos, redes seguras y hacking ético, certificado internacional CEH.",
-                photo: "https://randomuser.me/api/portraits/men/33.jpg",
+                photo: "/6.png",
                 certifications: ["CEH", "Maestría en Ciberseguridad"],
                 diplomas: ["Diploma en Protección de Datos"],
                 universityDegree: "Ingeniero de Sistemas"
@@ -47,14 +47,14 @@ export const CYCLES = [
                 name: "Jordan Inga Sánchez",
                 title: "Ingeniero de Sistemas e Informática",
                 bio: "Graduado en 2012 por la UNSA. Con experiencia en redes y administración de sistemas seguros.",
-                photo: "https://randomuser.me/api/portraits/men/34.jpg",
+                photo: "/4.png",
                 universityDegree: "Ingeniero de Sistemas e Informática"
             },
             {
                 name: "Franchesco Marchelo Sánchez Zuñiga",
                 title: "Ingeniero en Software",
                 bio: "Graduado en 2015 por la UNI. Experto en desarrollo web y móvil con certificaciones en Full Stack y Cloud Computing.",
-                photo: "https://randomuser.me/api/portraits/men/35.jpg",
+                photo: "/5.png",
                 certifications: ["Full Stack", "Cloud Computing"],
                 courses: ["Curso de DevOps", "Curso de AWS"],
                 universityDegree: "Ingeniero en Software"

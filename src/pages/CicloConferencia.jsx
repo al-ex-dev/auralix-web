@@ -425,7 +425,7 @@ function CycleDetail() {
                             }}>
                                 {cycle.moderator.photo && (
                                     <img
-                                        src={cycle.moderator.photo}
+                                        src={`${cycle.moderator.photo}`}
                                         alt={cycle.moderator.name}
                                         style={{
                                             width: 40,
